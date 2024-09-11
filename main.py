@@ -44,25 +44,25 @@ def setup(path_of_server, name,players, ip, port, ram , crossplay, chunkgen, cra
     gamemode = str(gamemode)
 
 # protection from empty values
-    if players == "" or players == " ":
+    if players == null or players == " ":
          players = "20"
-    if name == "" or name == " ":
+    if name == null or name == " ":
          name = "Server of Minecaft"
-    if ram == "" or ram == " ":
+    if ram == null or ram == " ":
          ram = "8"
-    if chunkgen == "" or chunkgen == "":
+    if chunkgen == null or chunkgen == "":
          chunkgen = "10"
-    if gamemode == "" or gamemode == " ":
+    if gamemode == null or gamemode == " ":
          gamemode = "survival"
-    if difficulty == "" or difficulty == " ":
+    if difficulty == null or difficulty == " ":
          difficulty = "easy"
-    if hardcore == "" or hardcore == " ":
+    if hardcore == null or hardcore == " ":
          hardcore = "no"
-    if crossplay == "" or crossplay == " ":
+    if crossplay == null or crossplay == " ":
          crossplay = "no"
-    if craked == "" or craked == " ":
+    if craked == null or craked == " ":
          craked = "yes"
-    if ip == "" or ip == " ":
+    if ip == null or ip == " ":
          ip = "localhost"
 
 
