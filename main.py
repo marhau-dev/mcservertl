@@ -44,25 +44,25 @@ def setup(path_of_server, name,players, ip, port, ram , crossplay, chunkgen, cra
     gamemode = str(gamemode)
 
 # protection from empty values
-    if players == null or players == " ":
+    if players == None or players == " ":
          players = "20"
-    if name == null or name == " ":
+    if name == None or name == " ":
          name = "Server of Minecaft"
-    if ram == null or ram == " ":
+    if ram == None or ram == " ":
          ram = "8"
-    if chunkgen == null or chunkgen == "":
+    if chunkgen == None or chunkgen == "":
          chunkgen = "10"
-    if gamemode == null or gamemode == " ":
+    if gamemode == None or gamemode == " ":
          gamemode = "survival"
-    if difficulty == null or difficulty == " ":
+    if difficulty == None or difficulty == " ":
          difficulty = "easy"
-    if hardcore == null or hardcore == " ":
+    if hardcore == None or hardcore == " ":
          hardcore = "no"
-    if crossplay == null or crossplay == " ":
+    if crossplay == None or crossplay == " ":
          crossplay = "no"
-    if craked == null or craked == " ":
+    if craked == None or craked == " ":
          craked = "yes"
-    if ip == null or ip == " ":
+    if ip == None or ip == " ":
          ip = "localhost"
 
 
@@ -137,7 +137,7 @@ white-list=false
 """
     #some version of forge have different start file name. And we make diferrent .bat file for this version of forge
     if core == "forge":
-        dfn = ["1.1","1.2.3","1.2.4","1.2.5","1.3.2","1.4.0","1.4.1","1.4.2","1.4.3","1.4.4","1.4.5","1.4.6","1.4.7","1.5","1.5.1","1.5.2","1.6.1","1.6.2","1.6.3","1.6.4","1.7.2","1.7.10","1.8","1.8.8","1.8.9","1.9","1.9.4","1.10","1.10.2","1.11","1.11.2","1.12","1.12.1","1.12.2","1.15","1.15.1","1.15.2","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5"]
+        dfn = ["1.7.10","1.8","1.9","1.10","1.12","1.12.2","1.15","1.15.1","1.15.2","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5"]
         if versionn in dfn:
             bat = f"""
 java -Xmx{ram}G -jar minecraft_server.{versions}.jar%*
@@ -199,6 +199,20 @@ def download(core,version):
     version = str(version)
     corename = core
     #api link to download core
+    if "fabric" in core or "Fabric" in core:
+         url = f"https://meta.fabricmc.net/v2/versions/loader/{version}/0.16.5/1.0.1/server/jar"
+    elif core == "paper":
+         url = f"https://api.papermc.io/v2/projects/paper/versions/{version}"
+         dv = requests.get(url)
+         data = dv.json()  # Parse JSON data
+         build = data["builds"][-1]
+         url = f"https://api.papermc.io/v2/projects/paper/versions/{version}/builds/{build}/downloads/paper-{version}-{build}.jar"
+    elif core == "purpur":
+         url = f"https://api.purpurmc.org/v2/purpur/{version}/latest/download"
+    elif "forge" in core or "Forge" in core:
+         url = f"https://ia600701.us.archive.org/31/items/forge-1.19.3/forge-{version}.jar"
+    else:
+        return f"false maybe your name of core or version was wrong.  {dw.status_code},{urls}"
     urls = f"https://mcutils.com/api/server-jars/{core}/{version}/download"
     dw = rq.get(urls)
     if dw.status_code == 200:
@@ -249,7 +263,7 @@ while True:
     answ = input("You: ")
     if answ == "help" or answ == "Help":
                 print(""" 
-            create --- create server fabric, forge, paper, spigot, purpur
+            create --- create server fabric, forge, paper,  purpur
             exit --- close app
         """)
     elif answ == "create" or answ == "Create":
@@ -258,9 +272,8 @@ while True:
                 print("""Pls write what core and version do you want.
                             cores:
                 Paper -- lowest version is 1.8.8 | type plugins
-                Spigot -- lowest version is 1.4.6 | type  plugins 
                 Purpur -- lowest version is 1.14.1 | type mods or plugins
-                Forge -- lowest version is 1.5.2 | type mods
+                Forge -- lowest version is 1.7.10 | type mods
                 Fabric -- lowest version is 1.14 | type mods
 
 
@@ -268,6 +281,8 @@ while True:
                 """)
                 # Collect info for download server core 
                 cores = input("Core : ")
+                if cores == "forge":
+                     print(["1.7.10", "1.8", "1.9", "1.10", "1.10.2", "1.12", "1.12.2", "1.13.2", "1.14.4", "1.15.2", "1.16.5", "1.17.1", "1.18.2", "1.19", "1.19.2", "1.19.3", "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.21"])
                 versions = input("Version: ")
                 os.system('cls')
                 
@@ -325,7 +340,15 @@ while True:
 
                 #after collecting info we use function to create server.properties
                 setup(pathserv,servername,playerscount,ips,ports,ram,crossplay,chnk,lcs,hd,df,gm,cores,versions)
-                print("""
+                if cores == "forge":
+                    print(f"""
+                      config file was saved. 
+                  run use a forge{versions}.jar for start server!!
+                        write exit to close app
+                      
+                      """)
+                else:
+                     print("""
                       config file was saved. 
                   run start.bat for start server!!
                         write exit to close app
