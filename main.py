@@ -21,9 +21,32 @@ def animate(text):
 
 #part for create server.properties
 def setup(path_of_server, name,players, ip, port, ram , crossplay, chunkgen, craked, hardcore, difficulty, gamemode,core,versionn ):
-    bat = "1"
-    elua = """
+    dfn = ["1.7.10","1.8","1.9","1.10","1.12","1.12.2","1.15","1.15.1","1.15.2","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5"]
+    if core == "forge":
+        
+        if versionn in dfn:
+            bat = f"""
+            java -Xmx{ram}G -jar minecraft_server.{versions}.jar%*
+            pause
+            """ 
+ 
+    elif versionn != dfn:  
+            bat = f"""
+            java -Xmx{ram}G -jar server.jar%*
+            pause
+            """   
+    elif core == "fabric":
+         bat = f"""
+            java -Xmx{ram}G -jar server.jar%*
+            pause
+            """ 
+    else:
+         bat = f"""java -Xmx{ram}G -jar server.jar
+            pause"""
 
+
+
+    elua = """
     eula=TRUE
     """
     import shutil
@@ -136,31 +159,14 @@ white-list=false
 
 """
     #some version of forge have different start file name. And we make diferrent .bat file for this version of forge
-    if core == "forge":
-        dfn = ["1.7.10","1.8","1.9","1.10","1.12","1.12.2","1.15","1.15.1","1.15.2","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5"]
-        if versionn in dfn:
-            bat = f"""
-java -Xmx{ram}G -jar minecraft_server.{versions}.jar%*
-pause
-""" 
- 
-        elif versionn != dfn:  
-            bat = f"""
-java -Xmx{ram}G -jar server.jar%*
-pause
-"""   
-    elif core == "fabric":
-         bat = f"""
-java -Xmx{ram}G -jar server.jar%*
-pause
-""" 
     try:
         pathds = path + "\\server.properties"
         file = open(pathds, 'w')
         file.write(temple)
-        pathds = path + "\\start.bat"
-        file = open(pathds, 'w')
-        file.write(bat)
+        batpath = path + "\\start.bat"
+        print(batpath)
+        batfile = open(batpath, 'w')
+        batfile.write(bat)
         pathds = path + "\\eula.txt"
         file = open(pathds, 'w')
         file.write(elua)
@@ -200,17 +206,13 @@ def download(core,version):
     corename = core
     #api link to download core
     if "fabric" in core or "Fabric" in core:
-         url = f"https://meta.fabricmc.net/v2/versions/loader/{version}/0.16.5/1.0.1/server/jar"
+         url = f"https://mcutils.com/api/server-jars/fabric/{version}/download"
     elif core == "paper":
-         url = f"https://api.papermc.io/v2/projects/paper/versions/{version}"
-         dv = requests.get(url)
-         data = dv.json()  # Parse JSON data
-         build = data["builds"][-1]
-         url = f"https://api.papermc.io/v2/projects/paper/versions/{version}/builds/{build}/downloads/paper-{version}-{build}.jar"
+         url = f"https://mcutils.com/api/server-jars/paper/{version}/download"
     elif core == "purpur":
-         url = f"https://api.purpurmc.org/v2/purpur/{version}/latest/download"
+         url = f"https://mcutils.com/api/server-jars/purpur/{version}/download"
     elif "forge" in core or "Forge" in core:
-         url = f"https://ia600701.us.archive.org/31/items/forge-1.19.3/forge-{version}.jar"
+         url = f"https://mcutils.com/api/server-jars/forge/{version}/download"
     else:
         return f"false maybe your name of core or version was wrong.  {dw.status_code},{urls}"
     urls = f"https://mcutils.com/api/server-jars/{core}/{version}/download"
