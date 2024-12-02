@@ -8,7 +8,9 @@
 ##fabric only
 ##https://meta.fabricmc.net/v2/versions/loader/{version}/0.16.5/1.0.1/server/jar
 
+## Forge
+## https://mcutils.com/api/server-jars/forge/{version}/download
 
+##Vanilla requre a manual database 
 
-##Vanilla and Forge requre a manual database 
 
