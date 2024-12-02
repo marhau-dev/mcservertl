@@ -12,5 +12,5 @@
 ## https://mcutils.com/api/server-jars/forge/{version}/download
 
 ##Vanilla requre a manual database 
-
+##https://mcutils.com/api/server-jars/vanilla/{version}/download
 
