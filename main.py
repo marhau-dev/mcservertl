@@ -70,7 +70,7 @@ def setup(path_of_server, name,players, ip, port, ram , crossplay, chunkgen, cra
     if players == None or players == " ":
          players = "20"
     if name == None or name == " ":
-         name = "Server of Minecaft"
+      name = "Server of Minecaft"
     if ram == None or ram == " ":
          ram = "8"
     if chunkgen == None or chunkgen == "":
