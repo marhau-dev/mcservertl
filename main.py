@@ -44,6 +44,10 @@ def setup(path_of_server, name,players, ip, port, ram , crossplay, chunkgen, cra
          bat = f"""java -Xmx{ram}G -jar server.jar
             pause"""
 
+    if craked == "yes" or craked == "Yes":
+         craked = "true"
+    else:
+         craked = "false"
 
 
     elua = """
@@ -89,10 +93,7 @@ def setup(path_of_server, name,players, ip, port, ram , crossplay, chunkgen, cra
          ip = "localhost"
 
 
-    if craked == "yes":
-        craked = "false"
-    else:
-        craked = "true"
+   
     if hardcore == "yes":
         hardcore = "true"
     else:
